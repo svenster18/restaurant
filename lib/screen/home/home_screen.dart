@@ -13,13 +13,24 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final TextEditingController _controller = TextEditingController();
+  String query = "";
+
   @override
   void initState() {
     super.initState();
 
     Future.microtask(() {
-      context.read<RestaurantListProvider>().fetchRestaurantList();
+      if (context.mounted) {
+        context.read<RestaurantListProvider>().fetchRestaurantList();
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -47,15 +58,61 @@ class _HomeScreenState extends State<HomeScreen> {
               child: CircularProgressIndicator(),
             ),
             RestaurantListLoadedState(data: var restaurantList) =>
-              ListView.builder(
-                itemCount: restaurantList.length,
-                itemBuilder: (context, index) {
-                  final restaurant = restaurantList[index];
+              CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: SearchBar(
+                        controller: _controller,
+                        elevation: WidgetStateProperty.all(0.0),
+                        hintText: "Search",
+                        trailing: [
+                          IconButton(onPressed: () {
+                            Future.microtask(() {
+                              if (context.mounted) {
+                                if (_controller.text.isEmpty) {
+                                  context.read<RestaurantListProvider>().fetchRestaurantList();
+                                } else {
+                                  context.read<RestaurantListProvider>().searchRestaurant(_controller.text);
+                                }
+                              }
+                            });
+                            FocusManager.instance.primaryFocus?.unfocus();
+                          }, icon: Icon(Icons.search))
+                        ],
+                        onSubmitted: (String text) {
+                          Future.microtask(() {
+                            if (context.mounted) {
+                              if (text.isEmpty) {
+                                context.read<RestaurantListProvider>().fetchRestaurantList();
+                              } else {
+                                context.read<RestaurantListProvider>().searchRestaurant(text);
+                              }
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  SliverList.builder(
+                    itemCount: restaurantList.length,
+                    itemBuilder: (context, index) {
+                      final restaurant = restaurantList[index];
 
-                  return RestaurantCard(restaurant: restaurant, onTap: () {
-                    Navigator.pushNamed(context, NavigationRoute.detailRoute.name, arguments: restaurant.id);
-                  });
-                },
+                      return RestaurantCard(
+                        restaurant: restaurant,
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            NavigationRoute.detailRoute.name,
+                            arguments: restaurant.id,
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ],
               ),
             RestaurantListErrorState(error: var message) => Center(
               child: Text(message),

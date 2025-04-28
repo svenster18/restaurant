@@ -1,6 +1,3 @@
-import 'category.dart';
-import 'customer_review.dart';
-import 'menus.dart';
 
 class Restaurant {
   final String id;

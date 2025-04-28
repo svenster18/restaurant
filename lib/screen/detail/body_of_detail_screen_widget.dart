@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:restaurant/data/model/restaurant.dart';
 import 'package:restaurant/data/model/restaurant_detail.dart';
 import 'package:restaurant/screen/detail/menus_card_widget.dart';
 import 'package:restaurant/screen/home/icon_text_widget.dart';

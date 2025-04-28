@@ -4,12 +4,17 @@ import 'package:restaurant/static/restaurant_list_result_state.dart';
 
 class RestaurantListProvider extends ChangeNotifier {
   final ApiServices _apiServices;
+  String _query = "";
 
   RestaurantListProvider(this._apiServices);
 
   RestaurantListResultState _resultState = RestaurantListNoneState();
 
   RestaurantListResultState get resultState => _resultState;
+
+  void setQuery(String query) {
+    _query = query;
+  }
 
   Future<void> fetchRestaurantList() async {
     try {
@@ -20,6 +25,26 @@ class RestaurantListProvider extends ChangeNotifier {
 
       if (result.error) {
         _resultState = RestaurantListErrorState(result.message);
+        notifyListeners();
+      } else {
+        _resultState = RestaurantListLoadedState(result.restaurants);
+        notifyListeners();
+      }
+    } on Exception catch (e) {
+      _resultState = RestaurantListErrorState(e.toString());
+      notifyListeners();
+    }
+  }
+
+  Future<void> searchRestaurant(String query) async {
+    try {
+      _resultState = RestaurantListLoadingState();
+      notifyListeners();
+
+      final result = await _apiServices.searchRestaurant(query);
+
+      if (result.error) {
+        _resultState = RestaurantListErrorState("Restaurant not found");
         notifyListeners();
       } else {
         _resultState = RestaurantListLoadedState(result.restaurants);

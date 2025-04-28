@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant/provider/detail/restaurant_detail_provider.dart';
 import 'package:restaurant/screen/detail/body_of_detail_screen_widget.dart';
