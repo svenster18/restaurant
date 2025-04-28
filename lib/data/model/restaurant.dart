@@ -1,17 +1,21 @@
+import 'category.dart';
+import 'customer_review.dart';
+import 'menus.dart';
+
 class Restaurant {
   final String id;
   final String name;
   final String description;
-  final String pictureId;
   final String city;
+  final String pictureId;
   final double rating;
 
   Restaurant({
     required this.id,
     required this.name,
     required this.description,
-    required this.pictureId,
     required this.city,
+    required this.pictureId,
     required this.rating,
   });
 
@@ -19,8 +23,8 @@ class Restaurant {
     id: json["id"],
     name: json["name"],
     description: json["description"],
-    pictureId: json["pictureId"],
     city: json["city"],
+    pictureId: json["pictureId"],
     rating: json["rating"]?.toDouble(),
   );
 
@@ -28,8 +32,8 @@ class Restaurant {
     "id": id,
     "name": name,
     "description": description,
-    "pictureId": pictureId,
     "city": city,
+    "pictureId": pictureId,
     "rating": rating,
   };
 }

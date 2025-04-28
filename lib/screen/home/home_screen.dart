@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant/provider/home/restaurant_list_provider.dart';
 import 'package:restaurant/screen/home/restaurant_card_widget.dart';
+import 'package:restaurant/static/navigation_route.dart';
 import 'package:restaurant/static/restaurant_list_result_state.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,9 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     Future.microtask(() {
-      if (context.mounted) {
-        context.read<RestaurantListProvider>().fetchRestaurantList();
-      }
+      context.read<RestaurantListProvider>().fetchRestaurantList();
     });
   }
 
@@ -53,7 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemBuilder: (context, index) {
                   final restaurant = restaurantList[index];
 
-                  return RestaurantCard(restaurant: restaurant, onTap: () {});
+                  return RestaurantCard(restaurant: restaurant, onTap: () {
+                    Navigator.pushNamed(context, NavigationRoute.detailRoute.name, arguments: restaurant.id);
+                  });
                 },
               ),
             RestaurantListErrorState(error: var message) => Center(
