@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant/screen/home/home_screen.dart';
+import 'package:restaurant/static/navigation_route.dart';
 import 'package:restaurant/style/theme/restaurant_theme.dart';
 
 void main() {
@@ -16,7 +18,10 @@ class MyApp extends StatelessWidget {
       theme: RestaurantTheme.lightTheme,
       darkTheme: RestaurantTheme.darkTheme,
       themeMode: ThemeMode.system,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: NavigationRoute.homeRoute.name,
+      routes: {
+        NavigationRoute.homeRoute.name: (context) => HomeScreen(),
+      },
     );
   }
 }
