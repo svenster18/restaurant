@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RestaurantTextStyles {
-  static final TextStyle _commonStyle = GoogleFonts.lato();
+  static final TextStyle _commonStyle = GoogleFonts.roboto();
 
   static TextStyle displayLarge = _commonStyle.copyWith(
     fontSize: 57,
