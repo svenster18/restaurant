@@ -4,6 +4,7 @@ enum Endpoint {
   largeImage("$_baseUrl/images/large/");
 
   const Endpoint(this.url);
+
   final String url;
 
   static const _baseUrl = "https://restaurant-api.dicoding.dev";

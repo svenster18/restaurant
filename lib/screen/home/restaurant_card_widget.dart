@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/data/api/api_service.dart';
 import 'package:restaurant/screen/home/icon_text_widget.dart';
 import 'package:restaurant/static/endpoint.dart';
 
@@ -57,9 +56,9 @@ class RestaurantCard extends StatelessWidget {
                     icon: const Icon(Icons.pin_drop, color: Colors.grey),
                     text: Text(
                       restaurant.city,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey,
-                      )
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.copyWith(color: Colors.grey),
                     ),
                   ),
                   const SizedBox.square(dimension: 6.0),
@@ -68,7 +67,7 @@ class RestaurantCard extends StatelessWidget {
                     text: Text(
                       restaurant.rating.toString(),
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w600
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),

@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
               "Recommendation restaurant for you!",
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: Colors.grey
+                color: Colors.grey,
               ),
             ),
           ],

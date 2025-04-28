@@ -8,13 +8,6 @@ class IconText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        icon,
-        const SizedBox.square(dimension: 4.0),
-        text
-      ],
-    );
+    return Row(children: [icon, const SizedBox.square(dimension: 4.0), text]);
   }
-
 }
