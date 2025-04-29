@@ -19,7 +19,7 @@ class _DetailScreenState extends State<DetailScreen> {
     super.initState();
 
     Future.microtask(() {
-      if (context.mounted) {
+      if (mounted) {
         context.read<RestaurantDetailProvider>().fetchRestaurantDetail(
           widget.restaurantId,
         );

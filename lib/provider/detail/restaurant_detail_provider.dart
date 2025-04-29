@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:restaurant/data/api/api_service.dart';
 import 'package:restaurant/static/restaurant_detail_result_state.dart';
@@ -25,6 +27,9 @@ class RestaurantDetailProvider extends ChangeNotifier {
         _resultState = RestaurantDetailLoadedState(result.restaurant);
         notifyListeners();
       }
+    } on SocketException {
+      _resultState = RestaurantDetailErrorState("Cannot connect to network, please turn on network settings");
+      notifyListeners();
     } on Exception catch (e) {
       _resultState = RestaurantDetailErrorState(e.toString());
       notifyListeners();

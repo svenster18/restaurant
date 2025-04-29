@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     Future.microtask(() {
-      if (context.mounted) {
+      if (mounted) {
         context.read<RestaurantListProvider>().fetchRestaurantList();
       }
     });
@@ -68,20 +68,37 @@ class _HomeScreenState extends State<HomeScreen> {
                         elevation: WidgetStateProperty.all(0.0),
                         hintText: "Search",
                         trailing: [
-                          IconButton(onPressed: () {
-                            Future.microtask(() {
-                              context.read<RestaurantListProvider>().searchRestaurant(_controller.text);
-                            });
-                            FocusManager.instance.primaryFocus?.unfocus();
-                          }, icon: Icon(Icons.search))
+                          IconButton(
+                            onPressed: () {
+                              Future.microtask(() {
+                                if (context.mounted) {
+                                  context
+                                      .read<RestaurantListProvider>()
+                                      .searchRestaurant(_controller.text);
+                                }
+                              });
+                              FocusManager.instance.primaryFocus?.unfocus();
+                            },
+                            icon: Icon(Icons.search),
+                          ),
                         ],
                         onChanged: (String text) {
-                          if (text.isEmpty) context.read<RestaurantListProvider>().fetchRestaurantList();
+                          if (text.isEmpty) {
+                            Future.microtask(() {
+                              if (context.mounted) {
+                                context
+                                    .read<RestaurantListProvider>()
+                                    .fetchRestaurantList();
+                              }
+                            });
+                          }
                         },
                         onSubmitted: (String text) {
                           Future.microtask(() {
                             if (context.mounted) {
-                              context.read<RestaurantListProvider>().searchRestaurant(text);
+                              context
+                                  .read<RestaurantListProvider>()
+                                  .searchRestaurant(text);
                             }
                           });
                         },

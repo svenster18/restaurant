@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:restaurant/data/api/api_service.dart';
 import 'package:restaurant/data/model/add_review.dart';
@@ -26,6 +28,9 @@ class ReviewProvider extends ChangeNotifier {
         _resultState = AddReviewLoadedState(result.customerReviews);
         notifyListeners();
       }
+    } on SocketException {
+      _resultState = AddReviewErrorState("Cannot connect to network, please turn on network settings");
+      notifyListeners();
     } on Exception catch (e) {
       _resultState = AddReviewErrorState(e.toString());
       notifyListeners();

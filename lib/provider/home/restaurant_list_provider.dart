@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:restaurant/data/api/api_service.dart';
 import 'package:restaurant/static/restaurant_list_result_state.dart';
@@ -28,6 +30,9 @@ class RestaurantListProvider extends ChangeNotifier {
         _resultState = RestaurantListLoadedState(result.restaurants);
         notifyListeners();
       }
+    } on SocketException {
+      _resultState = RestaurantListErrorState("Cannot connect to network, please turn on network settings");
+      notifyListeners();
     } on Exception catch (e) {
       _resultState = RestaurantListErrorState(e.toString());
       notifyListeners();
@@ -48,6 +53,9 @@ class RestaurantListProvider extends ChangeNotifier {
         _resultState = RestaurantListLoadedState(result.restaurants);
         notifyListeners();
       }
+    } on SocketException {
+      _resultState = RestaurantListErrorState("Cannot connect to network, please turn on network settings");
+      notifyListeners();
     } on Exception catch (e) {
       _resultState = RestaurantListErrorState(e.toString());
       notifyListeners();
