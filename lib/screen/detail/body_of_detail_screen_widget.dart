@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:restaurant/data/model/restaurant_detail.dart';
 import 'package:restaurant/screen/detail/menus_card_widget.dart';
+import 'package:restaurant/screen/detail/review_widget.dart';
 import 'package:restaurant/screen/home/icon_text_widget.dart';
 import 'package:restaurant/static/endpoint.dart';
 
@@ -61,9 +62,7 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
                   icon: Icon(Icons.star, color: Colors.yellow),
                   text: Text(
                     "${restaurant.rating}",
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyLarge,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
                 const SizedBox(height: 8.0),
@@ -90,9 +89,12 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 24.0),
-                Text("Menus", style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold
-                )),
+                Text(
+                  "Menus",
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 const SizedBox(height: 16.0),
                 Text("Foods", style: Theme.of(context).textTheme.titleMedium),
                 const SizedBox(height: 8.0),
@@ -119,6 +121,8 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
                     },
                   ),
                 ),
+                const SizedBox(height: 16.0),
+                Review(restaurant: restaurant),
               ],
             ),
           ),
