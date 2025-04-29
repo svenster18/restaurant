@@ -4,7 +4,6 @@ import 'package:restaurant/static/restaurant_list_result_state.dart';
 
 class RestaurantListProvider extends ChangeNotifier {
   final ApiServices _apiServices;
-  String _query = "";
 
   RestaurantListProvider(this._apiServices);
 
@@ -13,7 +12,6 @@ class RestaurantListProvider extends ChangeNotifier {
   RestaurantListResultState get resultState => _resultState;
 
   void setQuery(String query) {
-    _query = query;
   }
 
   Future<void> fetchRestaurantList() async {

@@ -70,25 +70,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         trailing: [
                           IconButton(onPressed: () {
                             Future.microtask(() {
-                              if (context.mounted) {
-                                if (_controller.text.isEmpty) {
-                                  context.read<RestaurantListProvider>().fetchRestaurantList();
-                                } else {
-                                  context.read<RestaurantListProvider>().searchRestaurant(_controller.text);
-                                }
-                              }
+                              context.read<RestaurantListProvider>().searchRestaurant(_controller.text);
                             });
                             FocusManager.instance.primaryFocus?.unfocus();
                           }, icon: Icon(Icons.search))
                         ],
+                        onChanged: (String text) {
+                          if (text.isEmpty) context.read<RestaurantListProvider>().fetchRestaurantList();
+                        },
                         onSubmitted: (String text) {
                           Future.microtask(() {
                             if (context.mounted) {
-                              if (text.isEmpty) {
-                                context.read<RestaurantListProvider>().fetchRestaurantList();
-                              } else {
-                                context.read<RestaurantListProvider>().searchRestaurant(text);
-                              }
+                              context.read<RestaurantListProvider>().searchRestaurant(text);
                             }
                           });
                         },
