@@ -31,7 +31,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         title: const Text(
           "Favorites",
         ),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
       ),
       body: Consumer<LocalDatabaseProvider>(
         builder: (context, value, child) {
