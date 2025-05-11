@@ -55,7 +55,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
             _ => const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [Text("No Bookmarked")],
+                children: [Text("No Favorited")],
               ),
             ),
           };

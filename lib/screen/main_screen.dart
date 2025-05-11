@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant/screen/favorite/favorite_screen.dart';
 import 'package:restaurant/screen/home/home_screen.dart';
+import 'package:restaurant/screen/setting/setting_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -17,7 +18,8 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       body: switch (_indexBottomNavBar) {
         0 => const HomeScreen(),
-        _ => const FavoriteScreen(),
+        1 => const FavoriteScreen(),
+        _ => const SettingScreen(),
       },
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _indexBottomNavBar,
@@ -36,6 +38,11 @@ class _MainScreenState extends State<MainScreen> {
             icon: Icon(Icons.favorite),
             label: "Favorite",
             tooltip: "Favorite",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: "Setting",
+            tooltip: "Setting",
           ),
         ],
       ),
