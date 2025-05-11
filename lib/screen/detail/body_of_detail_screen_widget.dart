@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:restaurant/data/model/restaurant.dart';
 import 'package:restaurant/data/model/restaurant_detail.dart';
 import 'package:restaurant/screen/detail/menus_card_widget.dart';
 import 'package:restaurant/screen/detail/review_widget.dart';
 import 'package:restaurant/screen/home/icon_text_widget.dart';
 import 'package:restaurant/static/endpoint.dart';
+
+import 'favorite_icon_widget.dart';
 
 class BodyOfDetailScreenWidget extends StatelessWidget {
   const BodyOfDetailScreenWidget({super.key, required this.restaurant});
@@ -36,6 +39,18 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
               ),
             ),
           ),
+          actions: [
+            FavoriteIconWidget(
+              restaurant: Restaurant(
+                id: restaurant.id,
+                name: restaurant.name,
+                description: restaurant.description,
+                city: restaurant.city,
+                pictureId: restaurant.pictureId,
+                rating: restaurant.rating,
+              ),
+            ),
+          ],
         ),
         SliverToBoxAdapter(
           child: Padding(
