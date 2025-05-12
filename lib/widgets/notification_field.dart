@@ -2,14 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant/provider/setting/notification_state_provider.dart';
 
+import '../provider/setting/local_notification_provider.dart';
 import '../provider/setting/shared_preferences_provider.dart';
 import '../utils/notification_state.dart';
 
-class NotificationField extends StatelessWidget {
+class NotificationField extends StatefulWidget {
   
   const NotificationField({
     super.key,
   });
+
+  @override
+  State<NotificationField> createState() => _NotificationFieldState();
+}
+
+class _NotificationFieldState extends State<NotificationField> {
+
+  Future<void> _requestPermission() async {
+    return await context.read<LocalNotificationProvider>().requestPermissions();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,20 +37,50 @@ class NotificationField extends StatelessWidget {
     );
   }
 
-  void _changeNotificationSetting(BuildContext context, bool value) async {
-    final notificationStateProvider = context.read<NotificationStateProvider>();
-    notificationStateProvider.notificationState = value ? NotificationState.enable : NotificationState.disable;
+  void _changeNotificationSetting(BuildContext context, bool isEnable) async {
+    await _requestPermission();
+    if (context.mounted) {
+      bool isPermissionGranted = context.read<LocalNotificationProvider>().permission ?? false;
+      if (!isPermissionGranted) {
+        final scaffoldMessenger = ScaffoldMessenger.of(context);
 
-    final scaffoldMessenger = ScaffoldMessenger.of(context);
-    final sharedPreferencesProvider = context.read<SharedPreferencesProvider>();
-    await sharedPreferencesProvider.saveNotificationSettingValue(value);
+        scaffoldMessenger.showSnackBar(
+          SnackBar(
+            content: Text(
+                "Please accept notification permission!"
+            ),
+          ),
+        );
+        return;
+      }
+      final notificationStateProvider = context.read<NotificationStateProvider>();
+      notificationStateProvider.notificationState = isEnable ? NotificationState.enable : NotificationState.disable;
 
-    scaffoldMessenger.showSnackBar(
-      SnackBar(
-        content: Text(
-            sharedPreferencesProvider.message
+      if (isEnable) {
+        _scheduleDailyElevenAMNotification();
+      } else {
+        _cancelNotification();
+      }
+
+      final scaffoldMessenger = ScaffoldMessenger.of(context);
+      final sharedPreferencesProvider = context.read<SharedPreferencesProvider>();
+      await sharedPreferencesProvider.saveNotificationSettingValue(isEnable);
+
+      scaffoldMessenger.showSnackBar(
+        SnackBar(
+          content: Text(
+              sharedPreferencesProvider.message
+          ),
         ),
-      ),
-    );
+      );
+    }
+  }
+
+  Future<void> _scheduleDailyElevenAMNotification() async {
+    context.read<LocalNotificationProvider>().scheduleDailyElevenAMNotification();
+  }
+
+  Future<void> _cancelNotification() async {
+    context.read<LocalNotificationProvider>().cancelNotification();
   }
 }

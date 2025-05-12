@@ -7,11 +7,13 @@ import 'package:restaurant/provider/detail/restaurant_detail_provider.dart';
 import 'package:restaurant/provider/favorite/local_database_provider.dart';
 import 'package:restaurant/provider/home/restaurant_list_provider.dart';
 import 'package:restaurant/provider/review/review_provider.dart';
+import 'package:restaurant/provider/setting/local_notification_provider.dart';
 import 'package:restaurant/provider/setting/notification_state_provider.dart';
 import 'package:restaurant/provider/setting/shared_preferences_provider.dart';
 import 'package:restaurant/provider/setting/theme_mode_provider.dart';
 import 'package:restaurant/screen/detail/detail_screen.dart';
 import 'package:restaurant/screen/main_screen.dart';
+import 'package:restaurant/services/setting/local_notification_service.dart';
 import 'package:restaurant/services/setting/shared_preferences_service.dart';
 import 'package:restaurant/static/navigation_route.dart';
 import 'package:restaurant/style/theme/restaurant_theme.dart';
@@ -20,11 +22,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   final prefs = await SharedPreferences.getInstance();
 
   runApp(
     MultiProvider(
       providers: [
+        Provider(
+          create: (context) => LocalNotificationService()..init()..configureLocalTimeZone(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LocalNotificationProvider(
+            context.read<LocalNotificationService>(),
+          )..requestPermissions(),
+        ),
         Provider(create: (context) => ApiServices()),
         ChangeNotifierProvider(
           create:
