@@ -13,7 +13,9 @@ class SharedPreferencesService {
     try {
       await _preferences.setBool(_keyNotification, value);
     } catch (e) {
-      throw Exception("Shared preferences cannot save notification setting value");
+      throw Exception(
+        "Shared preferences cannot save notification setting value",
+      );
     }
   }
 

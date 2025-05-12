@@ -4,7 +4,6 @@ import 'package:restaurant/style/colors/restaurant_colors.dart';
 import '../typograhy/restaurant_text_styles.dart';
 
 class RestaurantTheme {
-
   static ThemeData get lightTheme {
     return ThemeData(
       colorSchemeSeed: RestaurantColors.blue.color,
@@ -46,8 +45,6 @@ class RestaurantTheme {
   }
 
   static AppBarTheme get _appBarTheme {
-    return AppBarTheme(
-        toolbarTextStyle: _textTheme.titleLarge,
-    );
+    return AppBarTheme(toolbarTextStyle: _textTheme.titleLarge);
   }
 }

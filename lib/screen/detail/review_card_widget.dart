@@ -14,16 +14,19 @@ class ReviewCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(customerReview.name,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),),
-            Text(customerReview.date,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.grey
-              ),
+            Text(
+              customerReview.name,
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 16.0,),
+            Text(
+              customerReview.date,
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(color: Colors.grey),
+            ),
+            SizedBox(height: 16.0),
             Text('"${customerReview.review}"'),
           ],
         ),

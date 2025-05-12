@@ -7,12 +7,15 @@ class SharedPreferencesProvider extends ChangeNotifier {
   SharedPreferencesProvider(this._service);
 
   String _message = "";
+
   String get message => _message;
 
   bool _notificationEnable = false;
+
   bool get notificationEnable => _notificationEnable;
 
   ThemeMode _themeMode = ThemeMode.system;
+
   ThemeMode get themeMode => _themeMode;
 
   Future<void> saveNotificationSettingValue(bool isEnable) async {

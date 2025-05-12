@@ -10,14 +10,15 @@ class MenusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(4),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 8),
-        child: Center(child: Text(menus.name,
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),)
+        child: Center(
+          child: Text(
+            menus.name,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
       ),
     );
   }

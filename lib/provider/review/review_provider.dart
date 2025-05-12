@@ -29,7 +29,9 @@ class ReviewProvider extends ChangeNotifier {
         notifyListeners();
       }
     } on SocketException {
-      _resultState = AddReviewErrorState("Cannot connect to network, please turn on network settings");
+      _resultState = AddReviewErrorState(
+        "Cannot connect to network, please turn on network settings",
+      );
       notifyListeners();
     } on Exception catch (e) {
       _resultState = AddReviewErrorState(e.toString());

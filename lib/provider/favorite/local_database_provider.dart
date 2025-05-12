@@ -9,12 +9,15 @@ class LocalDatabaseProvider extends ChangeNotifier {
   LocalDatabaseProvider(this._service);
 
   String _message = "";
+
   String get message => _message;
 
   List<Restaurant>? _restaurantList;
+
   List<Restaurant>? get restaurantList => _restaurantList;
 
   Restaurant? _restaurant;
+
   Restaurant? get restaurant => _restaurant;
 
   Future<void> saveRestaurant(Restaurant value) async {

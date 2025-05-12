@@ -5,7 +5,6 @@ import '../provider/setting/shared_preferences_provider.dart';
 import '../provider/setting/theme_mode_provider.dart';
 
 class ThemeField extends StatelessWidget {
-
   const ThemeField({super.key});
 
   @override
@@ -30,7 +29,7 @@ class ThemeField extends StatelessWidget {
               _changeThemeSetting(context, value ?? ThemeMode.system);
             },
           );
-        }
+        },
       ),
     );
   }
@@ -43,11 +42,7 @@ class ThemeField extends StatelessWidget {
     await sharedPreferencesProvider.saveThemeSettingValue(themeMode);
 
     scaffoldMessenger.showSnackBar(
-      SnackBar(
-        content: Text(
-            sharedPreferencesProvider.message
-        ),
-      ),
+      SnackBar(content: Text(sharedPreferencesProvider.message)),
     );
   }
 }

@@ -53,13 +53,9 @@ void main() async {
               ),
         ),
         ChangeNotifierProvider(
-          create:
-              (context) => NotificationStateProvider(),
+          create: (context) => NotificationStateProvider(),
         ),
-        ChangeNotifierProvider(
-          create:
-              (context) => ThemeModeProvider(),
-        ),
+        ChangeNotifierProvider(create: (context) => ThemeModeProvider()),
       ],
       child: const MyApp(),
     ),
@@ -74,7 +70,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     super.initState();
@@ -90,10 +85,13 @@ class _MyAppState extends State<MyApp> {
       final themeMode = sharedPreferencesProvider.themeMode;
 
       notificationStateProvider.notificationState =
-      notificationEnable ? NotificationState.enable : NotificationState.disable;
+          notificationEnable
+              ? NotificationState.enable
+              : NotificationState.disable;
       themeStateProvider.themeMode = themeMode;
     });
   }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -114,7 +112,7 @@ class _MyAppState extends State<MyApp> {
                 ),
           },
         );
-      }
+      },
     );
   }
 }

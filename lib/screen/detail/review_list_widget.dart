@@ -4,10 +4,7 @@ import 'package:restaurant/screen/detail/review_card_widget.dart';
 import '../../data/model/customer_review.dart';
 
 class ReviewList extends StatelessWidget {
-  const ReviewList({
-    super.key,
-    required this.reviewList,
-  });
+  const ReviewList({super.key, required this.reviewList});
 
   final List<CustomerReview> reviewList;
 
@@ -26,10 +23,7 @@ class ReviewList extends StatelessWidget {
               maxWidth: 300,
               maxHeight: 150,
             ),
-            child: ReviewCard(
-              customerReview:
-              reviewList[index],
-            ),
+            child: ReviewCard(customerReview: reviewList[index]),
           );
         },
       ),

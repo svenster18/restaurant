@@ -5,13 +5,11 @@ import '../data/model/restaurant.dart';
 sealed class RestaurantListResultState extends Equatable {}
 
 class RestaurantListNoneState extends RestaurantListResultState {
-
   @override
   List<Object?> get props => [];
 }
 
 class RestaurantListLoadingState extends RestaurantListResultState {
-
   @override
   List<Object?> get props => [];
 }

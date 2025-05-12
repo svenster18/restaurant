@@ -28,7 +28,9 @@ class RestaurantDetailProvider extends ChangeNotifier {
         notifyListeners();
       }
     } on SocketException {
-      _resultState = RestaurantDetailErrorState("Cannot connect to network, please turn on network settings");
+      _resultState = RestaurantDetailErrorState(
+        "Cannot connect to network, please turn on network settings",
+      );
       notifyListeners();
     } on Exception catch (e) {
       _resultState = RestaurantDetailErrorState(e.toString());

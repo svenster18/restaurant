@@ -6,10 +6,7 @@ import '../provider/setting/shared_preferences_provider.dart';
 import '../utils/notification_state.dart';
 
 class NotificationField extends StatelessWidget {
-  
-  const NotificationField({
-    super.key,
-  });
+  const NotificationField({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,28 +15,28 @@ class NotificationField extends StatelessWidget {
       subtitle: const Text("Enable Notification"),
       trailing: Consumer<NotificationStateProvider>(
         builder: (context, provider, _) {
-          return Switch(value: provider.notificationState.isEnable, onChanged: (bool value) {
-            _changeNotificationSetting(context, value);
-          },);
-        }
+          return Switch(
+            value: provider.notificationState.isEnable,
+            onChanged: (bool value) {
+              _changeNotificationSetting(context, value);
+            },
+          );
+        },
       ),
     );
   }
 
   void _changeNotificationSetting(BuildContext context, bool value) async {
     final notificationStateProvider = context.read<NotificationStateProvider>();
-    notificationStateProvider.notificationState = value ? NotificationState.enable : NotificationState.disable;
+    notificationStateProvider.notificationState =
+        value ? NotificationState.enable : NotificationState.disable;
 
     final scaffoldMessenger = ScaffoldMessenger.of(context);
     final sharedPreferencesProvider = context.read<SharedPreferencesProvider>();
     await sharedPreferencesProvider.saveNotificationSettingValue(value);
 
     scaffoldMessenger.showSnackBar(
-      SnackBar(
-        content: Text(
-            sharedPreferencesProvider.message
-        ),
-      ),
+      SnackBar(content: Text(sharedPreferencesProvider.message)),
     );
   }
 }

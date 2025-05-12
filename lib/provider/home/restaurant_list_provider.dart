@@ -13,8 +13,7 @@ class RestaurantListProvider extends ChangeNotifier {
 
   RestaurantListResultState get resultState => _resultState;
 
-  void setQuery(String query) {
-  }
+  void setQuery(String query) {}
 
   Future<void> fetchRestaurantList() async {
     try {
@@ -31,7 +30,9 @@ class RestaurantListProvider extends ChangeNotifier {
         notifyListeners();
       }
     } on SocketException {
-      _resultState = RestaurantListErrorState("Cannot connect to network, please turn on network settings");
+      _resultState = RestaurantListErrorState(
+        "Cannot connect to network, please turn on network settings",
+      );
       notifyListeners();
     } on Exception catch (e) {
       _resultState = RestaurantListErrorState(e.toString());
@@ -54,7 +55,9 @@ class RestaurantListProvider extends ChangeNotifier {
         notifyListeners();
       }
     } on SocketException {
-      _resultState = RestaurantListErrorState("Cannot connect to network, please turn on network settings");
+      _resultState = RestaurantListErrorState(
+        "Cannot connect to network, please turn on network settings",
+      );
       notifyListeners();
     } on Exception catch (e) {
       _resultState = RestaurantListErrorState(e.toString());
