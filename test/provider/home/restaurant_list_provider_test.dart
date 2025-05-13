@@ -45,8 +45,9 @@ void main() {
     test(
       'should return restaurant list when get restaurant list success.',
       () async {
-        when(() => apiServices.getRestaurantList())
-            .thenAnswer((_) async => restaurantListResponseSuccess);
+        when(
+          () => apiServices.getRestaurantList(),
+        ).thenAnswer((_) async => restaurantListResponseSuccess);
 
         await restaurantListProvider.fetchRestaurantList();
         final state = restaurantListProvider.resultState;
@@ -58,9 +59,11 @@ void main() {
     );
 
     test(
-      'should return "Failed to load restaurant list" when get restaurant list failed', () async {
-        when(() => apiServices.getRestaurantList())
-            .thenThrow(Exception(restaurantListResponseError));
+      'should return "Failed to load restaurant list" when get restaurant list failed',
+      () async {
+        when(
+          () => apiServices.getRestaurantList(),
+        ).thenThrow(Exception(restaurantListResponseError));
 
         await restaurantListProvider.fetchRestaurantList();
         final state = restaurantListProvider.resultState;
@@ -68,6 +71,7 @@ void main() {
         expect(state, isA<RestaurantListErrorState>());
         final errorState = state as RestaurantListErrorState;
         expect(errorState.error, "Exception: $restaurantListResponseError");
-    });
+      },
+    );
   });
 }

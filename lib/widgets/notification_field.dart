@@ -7,17 +7,13 @@ import '../provider/setting/shared_preferences_provider.dart';
 import '../utils/notification_state.dart';
 
 class NotificationField extends StatefulWidget {
-  
-  const NotificationField({
-    super.key,
-  });
+  const NotificationField({super.key});
 
   @override
   State<NotificationField> createState() => _NotificationFieldState();
 }
 
 class _NotificationFieldState extends State<NotificationField> {
-
   @override
   void initState() {
     super.initState();
@@ -45,22 +41,20 @@ class _NotificationFieldState extends State<NotificationField> {
   }
 
   void _changeNotificationSetting(bool isEnable) async {
-    bool isPermissionGranted = context.read<LocalNotificationProvider>().permission ?? false;
+    bool isPermissionGranted =
+        context.read<LocalNotificationProvider>().permission ?? false;
     if (!isPermissionGranted) {
       final scaffoldMessenger = ScaffoldMessenger.of(context);
 
       scaffoldMessenger.showSnackBar(
-        SnackBar(
-          content: Text(
-              "Please accept notification permission!"
-          ),
-        ),
+        SnackBar(content: Text("Please accept notification permission!")),
       );
       _requestPermission();
       return;
     }
     final notificationStateProvider = context.read<NotificationStateProvider>();
-    notificationStateProvider.notificationState = isEnable ? NotificationState.enable : NotificationState.disable;
+    notificationStateProvider.notificationState =
+        isEnable ? NotificationState.enable : NotificationState.disable;
 
     if (isEnable) {
       _scheduleDailyElevenAMNotification();
@@ -73,11 +67,7 @@ class _NotificationFieldState extends State<NotificationField> {
     await sharedPreferencesProvider.saveNotificationSettingValue(isEnable);
 
     scaffoldMessenger.showSnackBar(
-      SnackBar(
-        content: Text(
-            sharedPreferencesProvider.message
-        ),
-      ),
+      SnackBar(content: Text(sharedPreferencesProvider.message)),
     );
   }
 
@@ -86,7 +76,9 @@ class _NotificationFieldState extends State<NotificationField> {
   }
 
   Future<void> _scheduleDailyElevenAMNotification() async {
-    context.read<LocalNotificationProvider>().scheduleDailyElevenAMNotification();
+    context
+        .read<LocalNotificationProvider>()
+        .scheduleDailyElevenAMNotification();
   }
 
   Future<void> _cancelNotification() async {

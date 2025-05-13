@@ -13,7 +13,6 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
-
   @override
   void initState() {
     Future.microtask(() {
@@ -27,11 +26,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Favorites",
-        ),
-      ),
+      appBar: AppBar(title: const Text("Favorites")),
       body: Consumer<LocalDatabaseProvider>(
         builder: (context, value, child) {
           final bookmarkList = value.restaurantList ?? [];

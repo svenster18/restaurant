@@ -18,7 +18,7 @@ class MainScreen extends StatelessWidget {
             1 => const FavoriteScreen(),
             _ => const SettingScreen(),
           };
-        }
+        },
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: context.watch<IndexNavProvider>().indexBottomNavBar,
