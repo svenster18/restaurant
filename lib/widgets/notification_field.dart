@@ -18,8 +18,12 @@ class NotificationField extends StatefulWidget {
 
 class _NotificationFieldState extends State<NotificationField> {
 
-  Future<void> _requestPermission() async {
-    return await context.read<LocalNotificationProvider>().requestPermissions();
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() async {
+      _requestPermission();
+    });
   }
 
   @override
@@ -31,8 +35,8 @@ class _NotificationFieldState extends State<NotificationField> {
         builder: (context, provider, _) {
           return Switch(
             value: provider.notificationState.isEnable,
-            onChanged: (bool value) {
-              _changeNotificationSetting(context, value);
+            onChanged: (bool value) async {
+              _changeNotificationSetting(value);
             },
           );
         },
@@ -40,43 +44,45 @@ class _NotificationFieldState extends State<NotificationField> {
     );
   }
 
-  void _changeNotificationSetting(BuildContext context, bool isEnable) async {
-    await _requestPermission();
-    if (context.mounted) {
-      bool isPermissionGranted = context.read<LocalNotificationProvider>().permission ?? false;
-      if (!isPermissionGranted) {
-        final scaffoldMessenger = ScaffoldMessenger.of(context);
-
-        scaffoldMessenger.showSnackBar(
-          SnackBar(
-            content: Text(
-                "Please accept notification permission!"
-            ),
-          ),
-        );
-        return;
-      }
-      final notificationStateProvider = context.read<NotificationStateProvider>();
-      notificationStateProvider.notificationState = isEnable ? NotificationState.enable : NotificationState.disable;
-
-      if (isEnable) {
-        _scheduleDailyElevenAMNotification();
-      } else {
-        _cancelNotification();
-      }
-
+  void _changeNotificationSetting(bool isEnable) async {
+    bool isPermissionGranted = context.read<LocalNotificationProvider>().permission ?? false;
+    if (!isPermissionGranted) {
       final scaffoldMessenger = ScaffoldMessenger.of(context);
-      final sharedPreferencesProvider = context.read<SharedPreferencesProvider>();
-      await sharedPreferencesProvider.saveNotificationSettingValue(isEnable);
 
       scaffoldMessenger.showSnackBar(
         SnackBar(
           content: Text(
-              sharedPreferencesProvider.message
+              "Please accept notification permission!"
           ),
         ),
       );
+      _requestPermission();
+      return;
     }
+    final notificationStateProvider = context.read<NotificationStateProvider>();
+    notificationStateProvider.notificationState = isEnable ? NotificationState.enable : NotificationState.disable;
+
+    if (isEnable) {
+      _scheduleDailyElevenAMNotification();
+    } else {
+      _cancelNotification();
+    }
+
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    final sharedPreferencesProvider = context.read<SharedPreferencesProvider>();
+    await sharedPreferencesProvider.saveNotificationSettingValue(isEnable);
+
+    scaffoldMessenger.showSnackBar(
+      SnackBar(
+        content: Text(
+            sharedPreferencesProvider.message
+        ),
+      ),
+    );
+  }
+
+  Future<void> _requestPermission() async {
+    context.read<LocalNotificationProvider>().requestPermissions();
   }
 
   Future<void> _scheduleDailyElevenAMNotification() async {

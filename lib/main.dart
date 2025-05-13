@@ -72,7 +72,7 @@ void main() async {
           create:
               (context) => LocalNotificationProvider(
                 context.read<LocalNotificationService>(),
-              )..requestPermissions(),
+              ),
         ),
       ],
       child: const MyApp(),

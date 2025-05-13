@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
-import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -27,6 +27,15 @@ class LocalNotificationService {
         false;
   }
 
+  Future<bool> _requestAndroidNotificationsPermission() async {
+    return await flutterLocalNotificationsPlugin
+            .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin
+            >()
+            ?.requestNotificationsPermission() ??
+        false;
+  }
+
   Future<bool> _requestExactAlarmsPermission() async {
     return await flutterLocalNotificationsPlugin
             .resolvePlatformSpecificImplementation<
@@ -38,15 +47,14 @@ class LocalNotificationService {
 
   Future<bool?> requestPermissions() async {
     if (defaultTargetPlatform == TargetPlatform.android) {
-      final androidImplementation =
-      flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>();
-      final requestNotificationsPermission = await androidImplementation?.requestNotificationsPermission();
       final notificationEnabled = await _isAndroidPermissionGranted();
       final requestAlarmEnabled = await _requestExactAlarmsPermission();
-      return (requestNotificationsPermission ?? false) &&
-          notificationEnabled &&
-          requestAlarmEnabled;
+      if (!notificationEnabled) {
+        final requestNotificationsPermission =
+            await _requestAndroidNotificationsPermission();
+        return requestNotificationsPermission && requestAlarmEnabled;
+      }
+      return notificationEnabled && requestAlarmEnabled;
     } else {
       return false;
     }
@@ -65,7 +73,8 @@ class LocalNotificationService {
       now.year,
       now.month,
       now.day,
-      11,
+      8,
+      52
     );
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
