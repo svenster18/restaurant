@@ -6,6 +6,7 @@ import 'package:restaurant/provider/detail/favorite_icon_provider.dart';
 import 'package:restaurant/provider/detail/restaurant_detail_provider.dart';
 import 'package:restaurant/provider/favorite/local_database_provider.dart';
 import 'package:restaurant/provider/home/restaurant_list_provider.dart';
+import 'package:restaurant/provider/index_nav_provider.dart';
 import 'package:restaurant/provider/review/review_provider.dart';
 import 'package:restaurant/provider/setting/local_notification_provider.dart';
 import 'package:restaurant/provider/setting/notification_state_provider.dart';
@@ -28,14 +29,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        Provider(
-          create: (context) => LocalNotificationService()..init()..configureLocalTimeZone(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => LocalNotificationProvider(
-            context.read<LocalNotificationService>(),
-          )..requestPermissions(),
-        ),
+        ChangeNotifierProvider(create: (context) => IndexNavProvider()),
         Provider(create: (context) => ApiServices()),
         ChangeNotifierProvider(
           create:
@@ -67,6 +61,19 @@ void main() async {
           create: (context) => NotificationStateProvider(),
         ),
         ChangeNotifierProvider(create: (context) => ThemeModeProvider()),
+        Provider(
+          create:
+              (context) =>
+                  LocalNotificationService()
+                    ..init()
+                    ..configureLocalTimeZone(),
+        ),
+        ChangeNotifierProvider(
+          create:
+              (context) => LocalNotificationProvider(
+                context.read<LocalNotificationService>(),
+              )..requestPermissions(),
+        ),
       ],
       child: const MyApp(),
     ),
